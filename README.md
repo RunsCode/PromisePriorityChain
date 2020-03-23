@@ -1,22 +1,26 @@
 # PromisePriorityChian
+###### 轻量级优先级处理类，采用单向链表设计， 自动内存管理无需外部强引用。
+可以解决如下问题：
+* 优先级逻辑处理
+* 嵌套逻辑展开铺平
+* 异步嵌套逻辑展开至同步的书写方式
+* 检验逻辑抽象包装
+* 轮询逻辑抽象包装
+* 转态延迟抽象包装
+
+##Example For Object-C
+
+
 
 ```objectivec
 
-- (void)testExample {
+	无需强引用 自引用内存管理 只要保证每一个element 链路完整向下传递或打断即可 promise.xxx()
 
-    PrioritySessionElement<NSNumber *, NSString *> *headElement = [[self customSession] dispose:^{
-        NSLog(@"❤️headElement dispose❤️");
-    }];
-    PrioritySessionElement *normalAsyncElement = [[self normalAsyncElement] dispose:^{
-        NSLog(@"❤️normalAsyncElement dispose❤️");
-    }];
+    PrioritySessionElement<NSNumber *, NSString *> *headElement = [self customSession];
+    PrioritySessionElement *normalAsyncElement = [self normalAsyncElement];
     PrioritySessionElement *testElement = [[PromisePriority(NSString *, id) {
-        NSLog(@"testElement promise data = %@", promise.input);
-        promise.next(@"11000");
-    } identifier:@"testElement"] dispose:^{
-        NSLog(@"❤️testElement dispose❤️");
-    }];
-
+        promise.next(@"11000");// promise.brake(error);
+    } identifier:@"testElement"] dispose:^{ ... }];
 
     headElement
     .then(normalAsyncElement)
@@ -24,90 +28,62 @@
     .then(self.loopValidatedElement)
     .then(self.conditionDelayElement)
     .then(self.validatedElement);
-
     [headElement executeWithData:@(-2)];
 }
+```
 
+* 常规校验操作 Element （if else 嵌套）
+
+``` objectivec
 - (PrioritySessionElement *)validatedElement {
     return [[[[PromisePriority(NSString *, NSNumber *){
-
         promise.output = @10086;
-        promise.validated(self.testCount >= 5);
-        NSLog(@"validatedElement promise data = %@", promise.input);
-
+        promise.validated(isValid);
     } identifier:@"validatedElement"] subscribe:^(NSNumber * _Nullable value) {
         NSLog(@"validatedElement subscribe data = %@", value);
-    }] catch:^(NSError * _Nullable error) {
+    }] catch:^(NSError * _Nullable error) { ... }] dispose:^{ ...}];
+``` 
 
-    }] dispose:^{
-        NSLog(@"❤️validatedElement dispose❤️");
-    }];
-}
+* 状态延迟校验Element
 
+
+``` objectivec
 - (PrioritySessionElement *)conditionDelayElement {
     return [[[[PromisePriority(NSNumber *, NSString *) {
-
         promise.output = @"10098";
-        promise.conditionDelay(self.testCount >= 5, 3.f);
-
-    } identifier:@"conditionDelayElement"] subscribe:^(NSString * _Nullable value) {
-
-        NSLog(@"conditionDelayElement subscribe value = %@", value);
-
-    }] catch:^(NSError * _Nullable error) {
-        NSLog(@"💥 conditionDelayElement catch error = %@", error.domain);
-    }] dispose:^{
-        NSLog(@"❤️conditionDelayElement dispose❤️");
-    }];
+        promise.conditionDelay(conditionIsOK, 3.f);
+    } identifier:@"conditionDelayElement"]];
 }
+``` 
 
+* 循环延迟校验Element（轮询）
+
+
+``` objectivec
 - (PrioritySessionElement *)loopValidatedElement {
-    return [[[[PromisePriority(NSString *, NSNumber *) {
-
-        self.testCount++;
+    return [PromisePriority(NSString *, NSNumber *) {
         promise.output = @(1);
-        NSLog(@"testCount = %lu", (unsigned long)self.testCount);
-        promise.loopValidated(self.testCount > 5, 1);
-
-    } identifier:@"loopValidatedElement"] subscribe:^(NSNumber * _Nullable value) {
-        NSLog(@"loopValidatedElement subscribe value = %@", value.stringValue);
-    }] catch:^(NSError * _Nullable error) {
-        NSLog(@"💥 loopValidatedElement catch error = %@", error.domain);
-    }] dispose:^{
-        NSLog(@"❤️loopValidatedElement dispose❤️");
+        promise.loopValidated(isValid, 1.f);
     }];
 }
+``` 
+
+* 常规异步Element
+
+
+``` objectivec
 
 - (PrioritySessionElement *)normalAsyncElement {
-    return [[[PromisePriority(NSNumber *, NSString *) {
-        [self dealy:0.2 completed:^{
-            NSLog(@"normalAsyncElement promise data = %@", promise.input.stringValue);
-            promise.next(@"session1");
-//            promise.brake(nil);
-        }];
-    } identifier:@"normalAsyncElement"] subscribe:^(NSString * _Nullable value) {
-        NSLog(@"normalAsyncElement subscribe value = %@", value);
-    }] catch:^(NSError * _Nullable error) {
-        NSLog(@"💥 normalAsyncElement catch error = %@", error.domain);
-    }];
+    return [PromisePriority(NSNumber *, NSString *) {...}];
 }
+``` 
+
+* 自定义实现Element
+ 
+``` objectivec
 
 - (PrioritySessionElement *)customSession {
-    PrioritySessionElement<NSNumber *, NSString *> *element = [PrioritySessionCustomElement new];
-    return [[element subscribe:^(NSString * _Nullable value) {
-
-        NSLog(@"customSession subscribe value = %@", value);
-
-    }] catch:^(NSError * _Nullable error) {
-        NSLog(@"💥 customSession catch error = %@", error.domain);
-    }];
-}
-
-
-- (void)dealy:(CGFloat)second completed:(dispatch_block_t)completed {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(second * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        completed();
-    });
+    return [PrioritySessionCustomElement new];
 }
 
 ```
