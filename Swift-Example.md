@@ -40,7 +40,7 @@
   // This is a minimalist way to create element, 
   // using anonymous closure parameters and initializing default parameters
    private func neck() -> PriorityElement<Int, String> {
-        return PriorityElement(id: "Neck") {
+        return PriorityElement {
             Println("neck input : \($0.input ?? -1)")
             $0.output = "I am Neck"
             $0.validated($0.input == 1)
