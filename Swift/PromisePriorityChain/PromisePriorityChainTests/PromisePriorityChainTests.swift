@@ -2,7 +2,7 @@
 //  PromisePriorityChainTests.swift
 //  PromisePriorityChainTests
 //
-//  Created by WangYajun on 2020/3/21.
+//  Created by RunsCode on 2020/3/21.
 //  Copyright © 2020 Runs. All rights reserved.
 //
 

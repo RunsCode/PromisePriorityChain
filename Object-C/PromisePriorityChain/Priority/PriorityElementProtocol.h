@@ -1,9 +1,9 @@
 //
 //  PriorityElementProtocol.h
-//  Object_C_Advance
+//  PromisePriorityChain
 //
-//  Created by WangYajun on 2019/12/31.
-//  Copyright © 2019 王亚军. All rights reserved.
+//  Created by RunsCode on 2019/12/31.
+//  Copyright © 2019 RunsCode. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

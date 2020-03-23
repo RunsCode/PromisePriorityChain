@@ -131,10 +131,10 @@
 			isa = PBXGroup;
 			children = (
 				4F103CD62425F7DB00429074 /* PriorityElementProtocol.h */,
-				4F103CD72425F7DB00429074 /* PrioritySessionElement.h */,
 				4F103CD82425F7DB00429074 /* PriorityPromise.h */,
-				4F103CD92425F7DB00429074 /* PrioritySessionElement.m */,
 				4F103CDA2425F7DB00429074 /* PriorityPromise.m */,
+				4F103CD72425F7DB00429074 /* PrioritySessionElement.h */,
+				4F103CD92425F7DB00429074 /* PrioritySessionElement.m */,
 			);
 			path = Priority;
 			sourceTree = "<group>";

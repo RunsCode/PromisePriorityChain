@@ -1,9 +1,9 @@
 //
 //  PrioritySessionElement.m
-//  Object_C_Advance
+//  PromisePriorityChain
 //
-//  Created by WangYajun on 2019/10/26.
-//  Copyright © 2019 王亚军. All rights reserved.
+//  Created by RunsCode on 2019/10/26.
+//  Copyright © 2019 RunsCode. All rights reserved.
 //
 
 #import "PrioritySessionElement.h"
@@ -43,7 +43,6 @@
     self = [super init];
     if (self) {
         _identifier = identifier;
-        NSLog(@"init element identifier : %@", identifier);
     }
     return self;
 }

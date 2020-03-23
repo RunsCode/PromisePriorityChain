@@ -2,7 +2,7 @@
 //  PriorityElementProtocol.swift
 //  PromisePriorityChain
 //
-//  Created by WangYajun on 2020/3/21.
+//  Created by RunsCode on 2020/3/21.
 //  Copyright © 2020 Runs. All rights reserved.
 //
 
@@ -27,7 +27,6 @@ extension PriorityElementProtocol {
         next = ele
         return ele
     }
-
 }
 
 
@@ -49,9 +48,12 @@ class PriorityElement<Input, Output> : IPriorityElement  {
 
     var disposeClosure: (() -> Void)?
 
+
+#if DEBUG
     deinit {
         Println("PriorityElement \(#function) id : \(id ?? "PriorityElement-id")")
     }
+#endif
 
     init(id: String? = "", _ closure: @escaping (PriorityPromise<Input, Output>) -> Void ) {
         self.id = id
@@ -60,11 +62,9 @@ class PriorityElement<Input, Output> : IPriorityElement  {
 
     public func invalidate() {
         promise?.invalidate()
-        //
         promise = nil
     }
 }
-
 
 extension PriorityElement {
 
@@ -114,5 +114,4 @@ extension PriorityElement {
         subscribeClosure?(value as? Output)
         disposeClosure?()
     }
-
 }

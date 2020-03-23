@@ -1,9 +1,9 @@
 //
 //  PriorityPromise.m
-//  Object_C_Advance
+//  PromisePriorityChain
 //
-//  Created by WangYajun on 2019/12/31.
-//  Copyright © 2019 王亚军. All rights reserved.
+//  Created by RunsCode on 2019/12/31.
+//  Copyright © 2019 RunsCode. All rights reserved.
 //
 
 #import "PriorityPromise.h"
@@ -55,18 +55,15 @@
     return ^(BOOL bValue, NSTimeInterval interval) {
         if (bValue || 0 == interval) {
             [self.element nextWithValue:self.output];
-            NSLog(@"2.priority promise %@ loop validates succed", self.identifier);
             return;
         }
         if (interval <= 0) {
             NSError *err = [NSError errorWithDomain:@"interval must bigger than 0" code:PriorityLoopValidatedError userInfo:nil];
             [self.element breakWithError:err];
-            NSLog(@"1.priority promise %@ loop validates failure", self.identifier);
             return;
         }
 
         [(NSObject *)(self.element) performSelector:@selector(executeWithData:) withObject:self.input afterDelay:interval];
-        NSLog(@"0. priority promise %@ loop validates", self.identifier);
     };
 }
 

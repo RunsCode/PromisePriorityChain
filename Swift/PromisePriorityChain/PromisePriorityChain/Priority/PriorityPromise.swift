@@ -2,15 +2,11 @@
 //  PriorityPromise.swift
 //  PromisePriorityChain
 //
-//  Created by WangYajun on 2020/3/21.
+//  Created by RunsCode on 2020/3/21.
 //  Copyright © 2020 Runs. All rights reserved.
 //
 
 import Foundation
-
-protocol PriorityPromiseable {
-
-}
 
 protocol PriorityPromiseProtocol : AnyObject {
     associatedtype Input
@@ -24,7 +20,6 @@ protocol PriorityPromiseProtocol : AnyObject {
     var element: PriorityElementProtocol { get }
 
     func invalidate()
-
 }
 
 extension PriorityPromiseProtocol {
@@ -37,7 +32,6 @@ extension PriorityPromiseProtocol {
         timer?.invalidate()
         timer = nil
     }
-
 }
 
 extension PriorityPromiseProtocol {
@@ -46,11 +40,9 @@ extension PriorityPromiseProtocol {
         self.element.break(with: err)
     }
 
-
     public func next(_ o: Output) {
         self.element.execute(next: o)
     }
-
 
     public func validated(_ isValid: Bool) {
         if isValid {
@@ -61,7 +53,6 @@ extension PriorityPromiseProtocol {
         let err = PrioriyError(kind: .validated, desc: "validated failure")
         self.element.break(with: err)
     }
-
 
     public func loop(validated isValid: Bool, t interval: TimeInterval) {
         if isValid || 0 == interval {
@@ -80,7 +71,6 @@ extension PriorityPromiseProtocol {
         }
     }
 
-
     public func condition(_ isOk: Bool, delay interval: TimeInterval) {
         guard isOk else {
             self.element.execute(next: self.output)
@@ -91,7 +81,6 @@ extension PriorityPromiseProtocol {
             self.element.execute(next: self.output)
         }
     }
-
 }
 
 class PriorityPromise<Input, Output> : PriorityPromiseProtocol {
@@ -106,9 +95,11 @@ class PriorityPromise<Input, Output> : PriorityPromiseProtocol {
 
     var element: PriorityElementProtocol
 
+#if DEBUG
     deinit {
         Println("PriorityPromise \(#function) id : \(id ?? "PriorityPromise-id"), element : \(element.id ?? "unknown")")
     }
+#endif
 
     init(id: String? = "PriorityPromise", input: Any? = nil, ele: PriorityElementProtocol) {
         self.id = id ?? ele.id
@@ -117,6 +108,3 @@ class PriorityPromise<Input, Output> : PriorityPromiseProtocol {
     }
 
 }
-
-
-extension PriorityPromise : PriorityPromiseable {}

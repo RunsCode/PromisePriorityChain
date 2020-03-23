@@ -2,7 +2,7 @@
 //  PPCError.swift
 //  PromisePriorityChain
 //
-//  Created by WangYajun on 2020/3/21.
+//  Created by RunsCode on 2020/3/21.
 //  Copyright © 2020 Runs. All rights reserved.
 //
 
@@ -25,7 +25,6 @@ struct PrioriyError : Error {
         case validated = 100000
         case loopValidated = 110000
     }
-
 
     let kind: PriorityErrorEnum
     let desc: String

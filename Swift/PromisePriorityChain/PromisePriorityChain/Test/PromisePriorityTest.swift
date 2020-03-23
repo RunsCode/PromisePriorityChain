@@ -2,7 +2,7 @@
 //  PromisePriorityTest.swift
 //  PromisePriorityChain
 //
-//  Created by WangYajun on 2020/3/22.
+//  Created by RunsCode on 2020/3/22.
 //  Copyright © 2020 Runs. All rights reserved.
 //
 
@@ -21,7 +21,6 @@ class PromisePriorityTest {
             .then(liver())
             .then(over())
         head.execute(with: "head->")
-
     }
 
     func delay(_ interval: TimeInterval, _ block: @escaping () -> Void) {
@@ -29,7 +28,6 @@ class PromisePriorityTest {
             block()
         }
     }
-
 
     private func head() -> PriorityElement<String, Int> {
         return PriorityElement(id: "Head") {  (promise: PriorityPromise<String, Int>) in
