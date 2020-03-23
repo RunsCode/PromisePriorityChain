@@ -17,6 +17,7 @@
 
     
 ```swift
+	// This is a complete way to create element
     private func head() -> PriorityElement<String, Int> {
         return PriorityElement(id: "Head") {  (promise: PriorityPromise<String, Int>) in
             Println("head input : \(promise.input ?? "")")
@@ -35,9 +36,10 @@
 
 #### General check operation (if else nesting)
 
-
 ```swift
-    private func neck() -> PriorityElement<Int, String> {
+  // This is a minimalist way to create element, 
+  // using anonymous closure parameters and initializing default parameters
+   private func neck() -> PriorityElement<Int, String> {
         return PriorityElement(id: "Neck") {
             Println("neck input : \($0.input ?? -1)")
             $0.output = "I am Neck"
@@ -50,7 +52,7 @@
 
 
 ```swift
-
+	// This is a recommended way to create element, providing an ID for debugging
     private func lung() -> PriorityElement<String, String> {
         return PriorityElement(id: "Lung") { 
             Println("lung input : \($0.input ?? "-1")")

@@ -52,7 +52,7 @@ class PromisePriorityTest {
     }
 
     private func neck() -> PriorityElement<Int, String> {
-        return PriorityElement(id: "Neck") {
+        return PriorityElement {
 
             Println("neck input : \($0.input ?? -1)")
             $0.output = "I am Neck"
@@ -73,7 +73,7 @@ class PromisePriorityTest {
     }
 
     private func lung() -> PriorityElement<String, String> {
-        return PriorityElement(id: "Lung") {
+        return PriorityElement {
 
             Println("lung input : \($0.input ?? "-1")")
             self.count += 1
@@ -96,7 +96,7 @@ class PromisePriorityTest {
     }
 
     private func heart() -> PriorityElement<String, String> {
-        return PriorityElement(id: "Heart") {
+        return PriorityElement {
 
             Println("heart input : \($0.input ?? "-1")")
             //
@@ -119,7 +119,7 @@ class PromisePriorityTest {
 
 
     private func liver() -> PriorityElement<String, String> {
-        return PriorityElement(id: "Liver") { (promise: PriorityPromise<String, String>) in
+        return PriorityElement { promise in
 
             Println("liver input : \(promise.input ?? "-1")")
             //
@@ -142,7 +142,7 @@ class PromisePriorityTest {
     }
 
     private func over() -> PriorityElement<String, String> {
-        return PriorityElement(id: "Over") {
+        return PriorityElement {
 
             Println("over input : \($0.input ?? "-1")")
             $0.next("Finished Release")
