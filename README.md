@@ -9,7 +9,7 @@
 * 异步嵌套逻辑展开至同步的书写方式
 * 检验逻辑抽象包装
 * 轮询逻辑抽象包装
-* 转态延迟抽象包装
+* zhuang'tai延迟抽象包装
 
 The following issues can be resolved:
 *  Priority logic processing
