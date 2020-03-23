@@ -7,13 +7,6 @@
 //
 
 import Foundation
-///    PriorityValidatedError = 100000,
-/// PriorityLoopValidatedError = 110000,
-
-enum PriorityErrorEnum : Int {
-    case validated = 100000
-    case loopValidated = 110000
-}
 
 protocol PriorityElementProtocol : class {
 
