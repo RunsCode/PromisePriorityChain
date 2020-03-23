@@ -38,12 +38,10 @@
 
 ```swift
     private func neck() -> PriorityElement<Int, String> {
-        return PriorityElement(id: "Neck") { (promise: PriorityPromise<Int, String>) in
-            Println("neck input : \(promise.input ?? -1)")
-            self.delay(0.5) {
-                promise.output = "I am Neck"
-                promise.validated(promise.input == 1)
-            }
+        return PriorityElement(id: "Neck") {
+            Println("neck input : \($0.input ?? -1)")
+            $0.output = "I am Neck"
+            $0.validated($0.input == 1)
         }.subscribe { ... }.catch { err in ... }.dispose { ... }
     }
 ```
@@ -54,31 +52,31 @@
 ```swift
 
     private func lung() -> PriorityElement<String, String> {
-        return PriorityElement(id: "Lung") { (promise: PriorityPromise<String, String>) in
-            Println("lung input : \(promise.input ?? "-1")")
+        return PriorityElement(id: "Lung") { 
+            Println("lung input : \($0.input ?? "-1")")
             self.count += 1
             //
-            promise.output = "I am Lung"
-            promise.loop(validated: self.count >= 5, t: 1)
+            $0.output = "I am Lung"
+            $0.loop(validated: self.count >= 5, t: 1)
         }.subscribe { ... }.catch { err in ... }.dispose { ... }
     }
 ```
 
-#### Loop delay check operation (e.g. polling)
+#### Condition check operation 
 
 ```swift
     private func heart() -> PriorityElement<String, String> {
-        return PriorityElement(id: "Heart") { (promise: PriorityPromise<String, String>) in
-            Println("heart input : \(promise.input ?? "-1")")
+        return PriorityElement(id: "Heart") {
+            Println("lung input : \($0.input ?? "-1")")
+            self.count += 1
             //
-            promise.output = "I am Heart"
-            promise.condition(self.count > 5, delay: 2)
-
+            $0.output = "I am Lung"
+            $0.condition(self.count > 5, delay: 1)
         }.subscribe { ... }.catch { err in ... }.dispose { ... }
     }
 ```
 
-#### State delay check operation
+#### Normal operation
 
 ```swift
     private func liver() -> PriorityElement<String, String> {

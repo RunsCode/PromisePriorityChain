@@ -30,7 +30,7 @@ class PromisePriorityTest {
     }
 
     private func head() -> PriorityElement<String, Int> {
-        return PriorityElement(id: "Head") {  (promise: PriorityPromise<String, Int>) in
+        return PriorityElement(id: "Head") { (_ promise: PriorityPromise<String, Int>) in
 
             Println("head input : \(promise.input ?? "")")
             self.delay(1) {
@@ -52,13 +52,11 @@ class PromisePriorityTest {
     }
 
     private func neck() -> PriorityElement<Int, String> {
-        return PriorityElement(id: "Neck") { (promise: PriorityPromise<Int, String>) in
+        return PriorityElement(id: "Neck") {
 
-            Println("neck input : \(promise.input ?? -1)")
-            self.delay(0.5) {
-                promise.output = "I am Neck"
-                promise.validated(promise.input == 1)
-            }
+            Println("neck input : \($0.input ?? -1)")
+            $0.output = "I am Neck"
+            $0.validated($0.input == 1)
 
         }.subscribe { i in
 
@@ -75,13 +73,13 @@ class PromisePriorityTest {
     }
 
     private func lung() -> PriorityElement<String, String> {
-        return PriorityElement(id: "Lung") { (promise: PriorityPromise<String, String>) in
+        return PriorityElement(id: "Lung") {
 
-            Println("lung input : \(promise.input ?? "-1")")
+            Println("lung input : \($0.input ?? "-1")")
             self.count += 1
             //
-            promise.output = "I am Lung"
-            promise.loop(validated: self.count >= 5, t: 1)
+            $0.output = "I am Lung"
+            $0.loop(validated: self.count >= 5, t: 1)
 
         }.subscribe { i in
 
@@ -98,12 +96,12 @@ class PromisePriorityTest {
     }
 
     private func heart() -> PriorityElement<String, String> {
-        return PriorityElement(id: "Heart") { (promise: PriorityPromise<String, String>) in
+        return PriorityElement(id: "Heart") {
 
-            Println("heart input : \(promise.input ?? "-1")")
+            Println("heart input : \($0.input ?? "-1")")
             //
-            promise.output = "I am Heart"
-            promise.condition(self.count > 5, delay: 2)
+            $0.output = "I am Heart"
+            $0.condition(self.count > 5, delay: 2)
 
         }.subscribe { i in
 
@@ -144,13 +142,10 @@ class PromisePriorityTest {
     }
 
     private func over() -> PriorityElement<String, String> {
-        return PriorityElement(id: "Over") { (promise: PriorityPromise<String, String>) in
+        return PriorityElement(id: "Over") {
 
-            Println("over input : \(promise.input ?? "-1")")
-            //
-            self.delay(1) {
-                promise.next("Finished Release")
-            }
+            Println("over input : \($0.input ?? "-1")")
+            $0.next("Finished Release")
 
         }.subscribe { i in
 
