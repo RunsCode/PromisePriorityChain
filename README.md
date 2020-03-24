@@ -1,4 +1,12 @@
 # PromisePriorityChain
+
+[![CI Status](https://img.shields.io/travis/Runs/Nunchakus.svg?style=flat)](https://github.com/RunsCode/PromisePriorityChain)
+[![Version](https://img.shields.io/cocoapods/v/Nunchakus.svg?style=flat)](https://cocoapods.org/pods/Nunchakus)
+[![License](https://img.shields.io/cocoapods/l/Nunchakus.svg?style=flat)](https://cocoapods.org/pods/Nunchakus)
+[![Platform](https://img.shields.io/cocoapods/p/Nunchakus.svg?style=flat)](https://cocoapods.org/pods/Nunchakus)
+
+
+
 ###### 轻量级优先级处理类，采用单向链表设计， 自动内存管理无需外部强引用。
 ###### Lightweight priority processing class with LinkedList design that automates memory management without strong external references.
 
