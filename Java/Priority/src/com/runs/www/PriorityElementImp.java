@@ -11,6 +11,8 @@ public class PriorityElementImp<T, E> implements IPriorityElement {
     private PriorityElementImp<?, ?> next;
 
 
+    public PriorityElementImp() {}
+
     public PriorityElementImp(IPriorityPromiseCallback<T, E> callback) {
         this.callback = callback;
     }

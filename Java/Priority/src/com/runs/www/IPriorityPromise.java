@@ -1,5 +1,8 @@
 package com.runs.www;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public interface IPriorityPromise<T, E> {
 
     String getId();
@@ -28,7 +31,10 @@ public interface IPriorityPromise<T, E> {
         getPriorityElement().breakWithError(new Error("validated failure"));
     }
 
-    void loopValidated(boolean isValid, int interval);
+    default void loopValidated(boolean isValid, int interval) {
+        Thread thread = new Thread();
+
+    }
     void condition(boolean isOk, int delay);
     void invalidate();
 }

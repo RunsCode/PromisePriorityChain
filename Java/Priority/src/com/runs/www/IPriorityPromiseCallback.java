@@ -3,6 +3,6 @@ package com.runs.www;
 @FunctionalInterface
 interface IPriorityPromiseCallback<T, E> {
 
-    void run(PriorityPromiseImp<T, E> promise);
+    void run(IPriorityPromise<T, E> promise);
 
 }
