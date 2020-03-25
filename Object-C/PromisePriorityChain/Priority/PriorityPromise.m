@@ -73,7 +73,7 @@
             [self.element nextWithValue:self.input];
             return;
         }
-        [(NSObject *)(self.element) performSelector:@selector(nextWithValue:) withObject:self.input afterDelay:interval];
+        [(NSObject *)(self.element) performSelector:@selector(nextWithValue:) withObject:self.output afterDelay:interval];
     };
 }
 

@@ -62,13 +62,7 @@ public interface IPriorityPromise<T, E> {
             return;
         }
 
-        Object object = getOutput();
-        if (null == object) {
-            object = getInput();
-        }
-
-        Object finalObject = object;
-        getDelayComponent().delay(delay, () -> getPriorityElement().executeNextWithData(finalObject));
+        getDelayComponent().delay(delay, () -> getPriorityElement().executeNextWithData(getOutput()));
     }
 
     default void invalidate() {
