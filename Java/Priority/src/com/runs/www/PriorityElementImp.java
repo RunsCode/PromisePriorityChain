@@ -52,7 +52,7 @@ public class PriorityElementImp<T, E> implements IPriorityElement {
 
     @Override
     public void breakWithError(Error error) {
-        this.promise = null;
+        releasePromise();
     }
 
     @Override
