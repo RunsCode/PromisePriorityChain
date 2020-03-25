@@ -4,6 +4,7 @@ public class PriorityPromiseImp<T, E> implements IPriorityPromise {
 
     private String id = "PriorityPromiseImp";
     private PriorityElementImp<T, E> element;
+    private DelayComponentImp delayComponentImp;
 
     private T input = null;
     private E output = null;
@@ -48,18 +49,20 @@ public class PriorityPromiseImp<T, E> implements IPriorityPromise {
     }
 
     @Override
-    public void loopValidated(boolean isValid, int interval) {
-
-    }
-
-    @Override
-    public void condition(boolean isOk, int delay) {
-
-    }
-
-    @Override
     public void invalidate() {
+        IPriorityPromise.super.invalidate();
+        if (null != delayComponentImp) {
+            delayComponentImp = null;
+        }
+    }
 
+    @Override
+    public IDelayComponent getDelayComponent() {
+        if (null != delayComponentImp) {
+            return delayComponentImp;
+        }
+        delayComponentImp = new DelayComponentImp();
+        return delayComponentImp;
     }
 
 }

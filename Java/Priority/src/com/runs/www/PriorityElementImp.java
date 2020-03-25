@@ -35,16 +35,19 @@ public class PriorityElementImp<T, E> implements IPriorityElement {
 
     @Override
     public void executeWithData(Object data) {
-        this.promise = new PriorityPromiseImp<>("PriorityPromiseImp -> " + id, this);
-        this.promise.setInput((T) data);
-        callback.run(this.promise);
+        promise = new PriorityPromiseImp<>("PriorityPromiseImp -> " + id, this);
+        promise.setInput((T) data);
+        callback.run(promise);
     }
 
     @Override
     public void executeNextWithData(Object data) {
-        this.next().executeWithData(data);
+        IPriorityElement nextElement = this.next();
+        if (null != nextElement) {
+            nextElement.executeWithData(data);
+        }
         //
-        this.promise = null;
+        releasePromise();
     }
 
     @Override
@@ -54,12 +57,20 @@ public class PriorityElementImp<T, E> implements IPriorityElement {
 
     @Override
     public void invalidate() {
-        this.promise.invalidate();
-        this.promise = null;
+        if (null != promise) {
+            promise.invalidate();
+        }
+        releasePromise();
     }
 
     private void handleCompletedWithOutput(E o) {
-        this.promise = null;
+        releasePromise();
 
+    }
+
+    private void releasePromise() {
+        if (null != promise) {
+            promise = null;
+        }
     }
 }

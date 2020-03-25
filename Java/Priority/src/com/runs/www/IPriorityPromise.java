@@ -1,7 +1,6 @@
 package com.runs.www;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.TimerTask;
 
 public interface IPriorityPromise<T, E> {
 
@@ -14,14 +13,19 @@ public interface IPriorityPromise<T, E> {
     E getOutput();
 
     IPriorityElement<T, E> getPriorityElement();
+    IDelayComponent getDelayComponent();
 
-    default void next(T t) {
-        getPriorityElement().executeNextWithData(t);
+    default void next(E o) {
+        IPriorityElement e = getPriorityElement();
+        if (null != e) {
+            e.executeNextWithData(o);
+        }
     }
 
     default void brake(Error error) {
         getPriorityElement().breakWithError(error);
     }
+
 
     default void validated(boolean isValid) {
         if (isValid) {
@@ -31,10 +35,44 @@ public interface IPriorityPromise<T, E> {
         getPriorityElement().breakWithError(new Error("validated failure"));
     }
 
-    default void loopValidated(boolean isValid, int interval) {
-        Thread thread = new Thread();
+    //TODO:There is a pain point here:
+    // the action performed by the current thread is switched to another thread,
+    // and this API is not recommended if it is a UI operation
+    default void loopValidated(boolean isValid, long interval) {
+        if (isValid || 0 == interval) {
+            getPriorityElement().executeNextWithData(getOutput());
+            return;
+        }
 
+        if (0 >= interval) {
+            Error error = new Error("interval must bigger than 0");
+            getPriorityElement().breakWithError(error);
+            return;
+        }
+
+        getDelayComponent().delay(interval,() -> getPriorityElement().executeWithData(getInput()));
     }
-    void condition(boolean isOk, int delay);
-    void invalidate();
+
+    //TODO:There is a pain point here:
+    // the action performed by the current thread is switched to another thread,
+    // and this API is not recommended if it is a UI operation
+    default void condition(boolean isOk, long delay) {
+        if (!isOk || 0 >= delay) {
+            getPriorityElement().executeNextWithData(getInput());
+            return;
+        }
+
+        Object object = getOutput();
+        if (null == object) {
+            object = getInput();
+        }
+
+        Object finalObject = object;
+        getDelayComponent().delay(delay, () -> getPriorityElement().executeNextWithData(finalObject));
+    }
+
+    default void invalidate() {
+        getDelayComponent().cancel();
+    }
+
 }
