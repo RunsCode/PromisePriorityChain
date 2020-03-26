@@ -21,7 +21,32 @@ public class Main {
                 .then(testElement3())
                 .then(testElement4())
                 .then(testElement5());
+        element0
+                .subscribe(o -> System.out.println(o.toString()))
+                .error(error -> System.out.println(error.toString()))
+                .dispose(() -> System.out.println("dispose"));
+
         element0.executeWithData(10);
+
+//        element0.subscribe(new IPriorityElementSubscribeCallback<Integer>() {
+//            @Override
+//            public void subscribe(Integer integer) {
+//
+//            }
+//        });
+
+//        element0.subscribe(new IPriorityElementSubscribeCallback() {
+//            @Override
+//            public void subscribe(Object o) {
+//
+//            }
+//        });
+//        .subscribe(new IPriorityElementSubscribeCallback() {
+//            @Override
+//            public void subscribe(Object o) {
+//
+//            }
+//        });
 
     }
 

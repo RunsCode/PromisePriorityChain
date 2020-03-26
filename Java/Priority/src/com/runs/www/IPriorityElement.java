@@ -10,4 +10,9 @@ public interface IPriorityElement<T, E> {
     void breakWithError(Error error);
 
     void invalidate();
+
+    IPriorityElement subscribe(IPriorityElementSubscribeCallback<T> subscribeCallback);
+    IPriorityElement error(IPriorityElementErrorCallback errorCallback);
+    IPriorityElement dispose(IPriorityElementDisposeCallback disposeCallback);
+
 }
