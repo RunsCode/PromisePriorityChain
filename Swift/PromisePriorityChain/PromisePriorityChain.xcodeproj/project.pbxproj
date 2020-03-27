@@ -18,8 +18,8 @@
 		4F103D1924263FB900429074 /* PriorityElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F103D1724263FB900429074 /* PriorityElement.swift */; };
 		4F103D1B2426418800429074 /* PriorityPromise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F103D1A2426418800429074 /* PriorityPromise.swift */; };
 		4F103D1C2426418800429074 /* PriorityPromise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F103D1A2426418800429074 /* PriorityPromise.swift */; };
-		4F103D1E2426482000429074 /* PrioriyError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F103D1D2426482000429074 /* PrioriyError.swift */; };
-		4F103D1F2426482000429074 /* PrioriyError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F103D1D2426482000429074 /* PrioriyError.swift */; };
+		4F103D1E2426482000429074 /* PriorityError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F103D1D2426482000429074 /* PriorityError.swift */; };
+		4F103D1F2426482000429074 /* PriorityError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F103D1D2426482000429074 /* PriorityError.swift */; };
 		4F103D2224279C9500429074 /* PromisePriorityTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F103D2124279C9500429074 /* PromisePriorityTest.swift */; };
 		4F103D2324279C9500429074 /* PromisePriorityTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F103D2124279C9500429074 /* PromisePriorityTest.swift */; };
 /* End PBXBuildFile section */
@@ -48,7 +48,7 @@
 		4F103D0D24263DB400429074 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4F103D1724263FB900429074 /* PriorityElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityElement.swift; sourceTree = "<group>"; };
 		4F103D1A2426418800429074 /* PriorityPromise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityPromise.swift; sourceTree = "<group>"; };
-		4F103D1D2426482000429074 /* PrioriyError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrioriyError.swift; sourceTree = "<group>"; };
+		4F103D1D2426482000429074 /* PriorityError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityError.swift; sourceTree = "<group>"; };
 		4F103D2124279C9500429074 /* PromisePriorityTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromisePriorityTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -126,7 +126,7 @@
 			children = (
 				4F103D1724263FB900429074 /* PriorityElement.swift */,
 				4F103D1A2426418800429074 /* PriorityPromise.swift */,
-				4F103D1D2426482000429074 /* PrioriyError.swift */,
+				4F103D1D2426482000429074 /* PriorityError.swift */,
 			);
 			path = Priority;
 			sourceTree = "<group>";
@@ -240,7 +240,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F103D1E2426482000429074 /* PrioriyError.swift in Sources */,
+				4F103D1E2426482000429074 /* PriorityError.swift in Sources */,
 				4F103D1B2426418800429074 /* PriorityPromise.swift in Sources */,
 				4F103CF524263DB300429074 /* AppDelegate.swift in Sources */,
 				4F103D2224279C9500429074 /* PromisePriorityTest.swift in Sources */,
@@ -257,7 +257,7 @@
 				4F103D1924263FB900429074 /* PriorityElement.swift in Sources */,
 				4F103D2324279C9500429074 /* PromisePriorityTest.swift in Sources */,
 				4F103D0C24263DB400429074 /* PromisePriorityChainTests.swift in Sources */,
-				4F103D1F2426482000429074 /* PrioriyError.swift in Sources */,
+				4F103D1F2426482000429074 /* PriorityError.swift in Sources */,
 				4F103D1C2426418800429074 /* PriorityPromise.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

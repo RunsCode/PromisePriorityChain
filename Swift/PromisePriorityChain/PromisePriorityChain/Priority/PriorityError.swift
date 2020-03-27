@@ -19,7 +19,7 @@ func Println(_ string: String?) {
     print("\(time)  \(string ?? "")")
 }
 
-struct PrioriyError : Error {
+struct PriorityError : Error {
 
     enum PriorityErrorEnum : Int {
         case validated = 100000

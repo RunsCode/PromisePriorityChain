@@ -51,7 +51,7 @@ extension PriorityPromiseProtocol {
             return
         }
 
-        let err = PrioriyError(kind: .validated, desc: "validated failure")
+        let err = PriorityError(kind: .validated, desc: "validated failure")
         self.element.break(with: err)
     }
 
@@ -62,7 +62,7 @@ extension PriorityPromiseProtocol {
         }
 
         if 0 > interval {
-            let err = PrioriyError(kind: .loopValidated, desc: "loop validated failure")
+            let err = PriorityError(kind: .loopValidated, desc: "loop validated failure")
             self.element.break(with: err)
             return
         }
