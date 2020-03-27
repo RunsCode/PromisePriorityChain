@@ -26,6 +26,7 @@ extension PriorityPromiseProtocol {
 
     private func delay(_ interval: TimeInterval, block: @escaping (Timer) -> Void) {
         timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: false, block: block)
+        RunLoop.current.add(timer!, forMode: .common)
     }
 
     func invalidate() {

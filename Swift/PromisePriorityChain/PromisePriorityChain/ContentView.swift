@@ -9,8 +9,25 @@
 import SwiftUI
 
 struct ContentView: View {
+
     var body: some View {
-        Text("Hello World")
+        VStack {
+            Text("Hello World")
+                .font(.title)
+                .multilineTextAlignment(.center)
+                .padding(.bottom, 100)
+                .animation(.easeInOut)
+
+            Button(action: {
+                _ = PromisePriorityTest()
+            }) {
+                Text("PromisePriorityTest")
+                .foregroundColor(Color.white)
+            }
+            .padding()
+            .background(Color.blue)
+            .cornerRadius(10)
+        }
     }
 }
 

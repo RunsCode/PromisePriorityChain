@@ -124,7 +124,7 @@ class PromisePriorityTest {
             Println("liver input : \(promise.input ?? "-1")")
             //
             self.delay(1) {
-                promise.break(nil)
+                promise.next("over")
             }
 
         }.subscribe { i in
