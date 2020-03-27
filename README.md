@@ -1,10 +1,10 @@
 # PromisePriorityChain
 
-![](https://img.shields.io/badge/language-swift-orange.svg)
+![](https://img.shields.io/badge/language-Swift-orange.svg)
 ![](https://img.shields.io/badge/language-Java-blue.svg)
 ![](https://img.shields.io/badge/language-Objectivec-red.svg)
 
-![](https://img.shields.io/badge/platform-ios-lightgrey.svg)
+![](https://img.shields.io/badge/platform-iOS-lightgrey.svg)
 ![](https://img.shields.io/badge/platform-Android-green.svg)
 ![](https://img.shields.io/badge/platform-JavaWeb-red.svg)
 
