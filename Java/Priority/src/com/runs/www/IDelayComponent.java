@@ -7,3 +7,8 @@ public interface IDelayComponent {
     void cancel();
 
 }
+
+@FunctionalInterface
+interface IDelayComponentCallback {
+    void onFinish();
+}

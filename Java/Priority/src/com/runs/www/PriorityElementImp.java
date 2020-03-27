@@ -1,6 +1,6 @@
 package com.runs.www;
 
-public class PriorityElementImp<T, E> implements IPriorityElement/*, IPriorityElementCapable */{
+public class PriorityElementImp<T, E> implements IPriorityElement {
 
     private String id = "PriorityElementImp";
 
@@ -9,6 +9,12 @@ public class PriorityElementImp<T, E> implements IPriorityElement/*, IPriorityEl
     private IPriorityPromiseCallback<T, E> callback;
 
     private PriorityElementImp<?, ?> next;
+
+    private IPriorityElementSubscribeCallback<E> subscribeCallback;
+
+    private IPriorityElementErrorCallback errorCallback;
+
+    private IPriorityElementDisposeCallback disposeCallback;
 
 
     public PriorityElementImp() {}
@@ -68,7 +74,7 @@ public class PriorityElementImp<T, E> implements IPriorityElement/*, IPriorityEl
 
     private void handleCompletedWithOutput(E o) {
         if (null != subscribeCallback) {
-            subscribeCallback.subscribe((T) o);
+            subscribeCallback.subscribe(o);
         }
         releasePromise();
     }
@@ -82,25 +88,20 @@ public class PriorityElementImp<T, E> implements IPriorityElement/*, IPriorityEl
         }
     }
 
-    private IPriorityElementSubscribeCallback subscribeCallback;
-    private IPriorityElementErrorCallback errorCallback;
-    private IPriorityElementDisposeCallback disposeCallback;
-
-    @Override
-    public IPriorityElement subscribe(IPriorityElementSubscribeCallback subscribeCallback) {
+    public PriorityElementImp<T, E> subscribe(IPriorityElementSubscribeCallback<E> subscribeCallback) {
         this.subscribeCallback = subscribeCallback;
         return this;
     }
 
-    @Override
-    public IPriorityElement error(IPriorityElementErrorCallback errorCallback) {
+    public PriorityElementImp<T, E> exception(IPriorityElementErrorCallback errorCallback) {
         this.errorCallback = errorCallback;
         return this;
     }
 
-    @Override
-    public IPriorityElement dispose(IPriorityElementDisposeCallback disposeCallback) {
+    public PriorityElementImp<T, E> dispose(IPriorityElementDisposeCallback disposeCallback) {
         this.disposeCallback = disposeCallback;
         return this;
     }
+
+
 }

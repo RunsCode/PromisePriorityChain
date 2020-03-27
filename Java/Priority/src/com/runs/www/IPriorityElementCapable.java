@@ -1,10 +1,6 @@
 package com.runs.www;
 
-public interface IPriorityElementCapable<T, E> {
-
-//    IPriorityElementCapable<T, E> subscribe(IPriorityElementSubscribeCallback<T> subscribeCallback);
-//    IPriorityElementCapable<T, E> exception(IPriorityElementErrorCallback errorCallback);
-//    IPriorityElementCapable<T, E> dispose(IPriorityElementDisposeCallback disposeCallback);
+public interface IPriorityElementCapable<T> {
 }
 
 @FunctionalInterface
@@ -20,4 +16,16 @@ interface IPriorityElementErrorCallback {
 @FunctionalInterface
 interface IPriorityElementDisposeCallback {
     void dispose();
+}
+
+interface IPriorityElement<T, E> {
+
+    <T1, E1>IPriorityElement<T1, E1> then(IPriorityElement<T1, E1> element);
+    <T1, E1>IPriorityElement<T1, E1> next();
+
+    void executeWithData(T input);
+    void executeNextWithData(Object object);
+    void breakWithError(Error error);
+
+    void invalidate();
 }

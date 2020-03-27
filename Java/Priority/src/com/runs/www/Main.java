@@ -15,83 +15,108 @@ public class Main {
     public static void main(String[] args) {
 
         PriorityElementImp<Integer, Integer> element0 = testElement0();
+        PriorityElementImp<String, String> testElement5 = testElement5();
+
+        testElement5.subscribe(s -> {
+            System.out.println("testElement5 subscribe : " + s);
+        }).exception(error -> {
+            System.out.println("testElement5 exception : " + error.getMessage());
+        }).dispose(() -> {
+            System.out.println("testElement5 dispose");
+        });
+
         element0
                 .then(testElement1())
                 .then(testElement2())
                 .then(testElement3())
                 .then(testElement4())
-                .then(testElement5());
-        element0
-                .subscribe(o -> System.out.println(o.toString()))
-                .error(error -> System.out.println(error.toString()))
-                .dispose(() -> System.out.println("dispose"));
-
+                .then(testElement5);
         element0.executeWithData(10);
-
-//        element0.subscribe(new IPriorityElementSubscribeCallback<Integer>() {
-//            @Override
-//            public void subscribe(Integer integer) {
-//
-//            }
-//        });
-
-//        element0.subscribe(new IPriorityElementSubscribeCallback() {
-//            @Override
-//            public void subscribe(Object o) {
-//
-//            }
-//        });
-//        .subscribe(new IPriorityElementSubscribeCallback() {
-//            @Override
-//            public void subscribe(Object o) {
-//
-//            }
-//        });
 
     }
 
-    public static PriorityElementImp<Integer, Integer> testElement0() {
-        return new PriorityElementImp<>( promise -> {
+    public static PriorityElementImp testElement0() {
+        return new PriorityElementImp<Integer, Integer>( promise -> {
+
             Integer t = promise.getInput();
             System.out.println("t = " + t.toString());
             System.out.println("100ms查询一次，一共查询5次， 轮询 ");
             promise.next(100);
+
+        }).subscribe(integer -> {
+            System.out.println("element0 subscribe : " + integer);
+        }).exception(error -> {
+            System.out.println("element0 exception : " + error.getMessage());
+        }).dispose(() -> {
+            System.out.println("element0 dispose");
         });
     }
 
-    public static PriorityElementImp<Integer, Integer> testElement1() {
-        return new PriorityElementImp<>( promise -> {
+    public static PriorityElementImp testElement1() {
+        return new PriorityElementImp<Integer, Integer>( promise -> {
+
             mCount++;
             System.out.println(System.currentTimeMillis() + "  mCount = " + mCount);
             promise.setOutput(mCount);
             promise.loopValidated(mCount >= 5, 100);
+
+        }).subscribe(integer -> {
+            System.out.println("testElement1 subscribe : " + integer);
+        }).exception(error -> {
+            System.out.println("testElement1 exception : " + error.getMessage());
+        }).dispose(() -> {
+            System.out.println("testElement1 dispose");
         });
     }
 
-    public static PriorityElementImp<Integer, Integer> testElement2() {
-        return new PriorityElementImp<>( promise -> {
+    public static PriorityElementImp testElement2() {
+        return new PriorityElementImp<Integer, Integer>( promise -> {
+
             Integer t = promise.getInput();
             System.out.println("t = " + t.toString());
             promise.next(10000);
+
+        }).subscribe(integer -> {
+            System.out.println("testElement2 subscribe : " + integer);
+        }).exception(error -> {
+            System.out.println("testElement2 exception : " + error.getMessage());
+        }).dispose(() -> {
+            System.out.println("testElement2 dispose");
         });
     }
 
-    public static PriorityElementImp<Integer, String> testElement3() {
-        return new PriorityElementImp<>( promise -> {
+    public static PriorityElementImp testElement3() {
+        return new PriorityElementImp<Integer, String>( promise -> {
+
             Integer t = promise.getInput();
             System.out.println("t = " + t.toString());
             promise.setOutput("即将延迟校验结束");
             promise.validated(t > 100);
+
+        }).subscribe(s -> {
+            System.out.println("testElement3 subscribe : " + s);
+        }).exception(error -> {
+            System.out.println("testElement3 exception : " + error.getMessage());
+        }).dispose(() -> {
+            System.out.println("testElement3 dispose");
         });
     }
 
-    public static PriorityElementImp<String, String> testElement4() {
-        return new PriorityElementImp<>(promise -> {
+    public static PriorityElementImp testElement4() {
+        return new PriorityElementImp<String, String>(promise -> {
+
             String s = promise.getInput();
             System.out.println(s);
             System.out.println(System.currentTimeMillis() + "  begin 延迟1000ms校验结束");
             promise.setOutput("结束了");
             promise.condition(mCount >= 5, 1000);
+
+        }).subscribe(s -> {
+            System.out.println("testElement4 subscribe : " + s);
+        }).exception(error -> {
+            System.out.println("testElement4 exception : " + error.getMessage());
+        }).dispose(() -> {
+            System.out.println("testElement4 dispose");
         });
     }
 

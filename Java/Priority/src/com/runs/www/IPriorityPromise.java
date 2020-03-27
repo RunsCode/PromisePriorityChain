@@ -1,6 +1,11 @@
 package com.runs.www;
 
-import java.util.TimerTask;
+@FunctionalInterface
+interface IPriorityPromiseCallback<T, E> {
+
+    void run(IPriorityPromise<T, E> promise);
+
+}
 
 public interface IPriorityPromise<T, E> {
 
@@ -23,6 +28,9 @@ public interface IPriorityPromise<T, E> {
     }
 
     default void brake(Error error) {
+        if (null == error) {
+            error = new Error("NO Error Description");
+        }
         getPriorityElement().breakWithError(error);
     }
 
