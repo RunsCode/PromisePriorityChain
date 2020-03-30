@@ -57,7 +57,8 @@ public class PriorityPromiseImp<T, E> implements IPriorityPromise {
     public void notifyMainThreadByHandler(int mode, long delay) {
         if (null != handler) {
             Message msg = handler.obtainMessage();
-            msg.arg1 = LOOP_VALIDATED_MODE;
+            msg.what = PROMISE_PROORITY_WHAT;
+            msg.arg1 = mode;
             msg.obj = this;
             handler.sendMessageDelayed(msg, delay);
             return;

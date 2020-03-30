@@ -45,7 +45,6 @@ public interface IPriorityPromise<T, E> {
         getPriorityElement().breakWithError(error);
     }
 
-
     default void validated(boolean isValid) {
         if (isValid) {
             getPriorityElement().executeNextWithData(getOutput());
@@ -69,7 +68,6 @@ public interface IPriorityPromise<T, E> {
         //
         notifyMainThreadByHandler(LOOP_VALIDATED_MODE, interval);
     }
-
 
     default void condition(boolean isOk, long delay) {
         if (!isOk || 0 >= delay) {
