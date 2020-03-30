@@ -1,18 +1,19 @@
 package com.example.promiseprioritychain;
 
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import android.os.Handler;
+import android.util.Log;
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
 
-import static java.util.concurrent.TimeUnit.*;
-
-public class Main {
-
+public class MainActivity extends AppCompatActivity {
     public static int mCount = 0;
 
-    public static void main(String[] args) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        Log.i("MainActivity", "onCreate");
 
         PriorityElementImp<Integer, Integer> element0 = testElement0();
         PriorityElementImp<String, String> testElement5 = testElement5();
@@ -36,7 +37,7 @@ public class Main {
     }
 
     public static PriorityElementImp testElement0() {
-        return new PriorityElementImp<Integer, Integer>( promise -> {
+        return new PriorityElementImp<Integer, Integer>(promise -> {
 
             Integer t = promise.getInput();
             System.out.println("t = " + t.toString());
@@ -52,8 +53,9 @@ public class Main {
         });
     }
 
+
     public static PriorityElementImp testElement1() {
-        return new PriorityElementImp<Integer, Integer>( promise -> {
+        return new PriorityElementImp<Integer, Integer>(promise -> {
 
             mCount++;
             System.out.println(System.currentTimeMillis() + "  mCount = " + mCount);
@@ -70,7 +72,7 @@ public class Main {
     }
 
     public static PriorityElementImp testElement2() {
-        return new PriorityElementImp<Integer, Integer>( promise -> {
+        return new PriorityElementImp<Integer, Integer>(promise -> {
 
             Integer t = promise.getInput();
             System.out.println("t = " + t.toString());
@@ -86,7 +88,7 @@ public class Main {
     }
 
     public static PriorityElementImp testElement3() {
-        return new PriorityElementImp<Integer, String>( promise -> {
+        return new PriorityElementImp<Integer, String>(promise -> {
 
             Integer t = promise.getInput();
             System.out.println("t = " + t.toString());

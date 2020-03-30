@@ -17,8 +17,6 @@ public class PriorityElementImp<T, E> implements IPriorityElement {
     private IPriorityElementDisposeCallback disposeCallback;
 
 
-    public PriorityElementImp() {}
-
     public PriorityElementImp(IPriorityPromiseCallback<T, E> callback) {
         this.callback = callback;
     }
@@ -102,6 +100,5 @@ public class PriorityElementImp<T, E> implements IPriorityElement {
         this.disposeCallback = disposeCallback;
         return this;
     }
-
 
 }

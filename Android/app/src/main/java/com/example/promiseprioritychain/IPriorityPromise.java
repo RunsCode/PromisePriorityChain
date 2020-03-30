@@ -1,5 +1,11 @@
 package com.example.promiseprioritychain;
 
+
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
+import androidx.annotation.NonNull;
+
 @FunctionalInterface
 interface IPriorityPromiseCallback<T, E> {
 
@@ -8,6 +14,11 @@ interface IPriorityPromiseCallback<T, E> {
 }
 
 public interface IPriorityPromise<T, E> {
+
+    static final int PROMISE_PROORITY_WHAT = 1 << 4;
+    static final int LOOP_VALIDATED_MODE = 1 << 8;
+    static final int CONDITION_DELAY_MODE = 1 << 16;
+
 
     String getId();
 
@@ -18,7 +29,7 @@ public interface IPriorityPromise<T, E> {
     E getOutput();
 
     IPriorityElement<T, E> getPriorityElement();
-    IDelayComponent getDelayComponent();
+    void notifyMainThreadByHandler(int mode, long delay);
 
     default void next(E o) {
         IPriorityElement e = getPriorityElement();
@@ -43,10 +54,8 @@ public interface IPriorityPromise<T, E> {
         getPriorityElement().breakWithError(new Error("validated failure"));
     }
 
-    //TODO:There is a pain point here:
-    // the action performed by the current thread is switched to another thread,
-    // and this API is not recommended if it is a UI operation
     default void loopValidated(boolean isValid, long interval) {
+        Log.i("Priority",  "0. thread name : " + Thread.currentThread().getName());
         if (isValid || 0 == interval) {
             getPriorityElement().executeNextWithData(getOutput());
             return;
@@ -57,24 +66,20 @@ public interface IPriorityPromise<T, E> {
             getPriorityElement().breakWithError(error);
             return;
         }
-
-        getDelayComponent().delay(interval,() -> getPriorityElement().executeWithData(getInput()));
+        //
+        notifyMainThreadByHandler(LOOP_VALIDATED_MODE, interval);
     }
 
-    //TODO:There is a pain point here:
-    // the action performed by the current thread is switched to another thread,
-    // and this API is not recommended if it is a UI operation
+
     default void condition(boolean isOk, long delay) {
         if (!isOk || 0 >= delay) {
             getPriorityElement().executeNextWithData(getInput());
             return;
         }
-
-        getDelayComponent().delay(delay, () -> getPriorityElement().executeNextWithData(getOutput()));
+        //
+        notifyMainThreadByHandler(CONDITION_DELAY_MODE, delay);
     }
 
-    default void invalidate() {
-        getDelayComponent().cancel();
-    }
+    void invalidate();
 
 }

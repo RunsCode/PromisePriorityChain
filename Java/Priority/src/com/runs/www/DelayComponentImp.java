@@ -1,4 +1,4 @@
-package com.runs.www;
+package com.example.promiseprioritychain;
 
 import java.util.Timer;
 import java.util.TimerTask;

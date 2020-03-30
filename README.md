@@ -41,7 +41,7 @@ The following issues can be resolved:
 
 >[Example For Java](https://github.com/RunsCode/PromisePriorityChain/blob/master/Java-Example.md)
 
->[Example For Android](https://github.com/RunsCode/PromisePriorityChain/blob/master/Android-Example.md)
+>[Example For Android](https://github.com/RunsCode/PromisePriorityChain/blob/master/Java-Example.md)
 
 
 
