@@ -53,11 +53,11 @@
 
 - (PriorityPromiseLoopValidated)loopValidated {
     return ^(BOOL bValue, NSTimeInterval interval) {
-        if (bValue || 0 == interval) {
+        if (bValue) {
             [self.element nextWithValue:self.output];
             return;
         }
-        if (interval <= 0) {
+        if (interval < 0) {
             NSError *err = [NSError errorWithDomain:@"interval must bigger than 0" code:PriorityLoopValidatedError userInfo:nil];
             [self.element breakWithError:err];
             return;

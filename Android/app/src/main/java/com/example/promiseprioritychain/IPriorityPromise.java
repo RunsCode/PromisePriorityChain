@@ -55,12 +55,12 @@ public interface IPriorityPromise<T, E> {
 
     default void loopValidated(boolean isValid, long interval) {
         Log.i("Priority",  "0. thread name : " + Thread.currentThread().getName());
-        if (isValid || 0 == interval) {
+        if (isValid) {
             getPriorityElement().executeNextWithData(getOutput());
             return;
         }
 
-        if (0 >= interval) {
+        if (0 > interval) {
             Error error = new Error("interval must bigger than 0");
             getPriorityElement().breakWithError(error);
             return;

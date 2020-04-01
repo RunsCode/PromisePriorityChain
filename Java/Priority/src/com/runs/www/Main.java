@@ -1,12 +1,4 @@
-package com.example.promiseprioritychain;
-
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
-import static java.util.concurrent.TimeUnit.*;
+package com.runs.www;
 
 public class Main {
 

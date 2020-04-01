@@ -1,4 +1,4 @@
-package com.example.promiseprioritychain;
+package com.runs.www;
 
 public interface IPriorityElementCapable<T> {
 }

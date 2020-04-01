@@ -1,4 +1,4 @@
-package com.example.promiseprioritychain;
+package com.runs.www;
 
 public class PriorityElementImp<T, E> implements IPriorityElement {
 

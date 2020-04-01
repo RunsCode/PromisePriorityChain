@@ -56,7 +56,7 @@ extension PriorityPromiseProtocol {
     }
 
     public func loop(validated isValid: Bool, t interval: TimeInterval) {
-        if isValid || 0 == interval {
+        if isValid {
             self.element.execute(next: self.output)
             return
         }
@@ -67,7 +67,7 @@ extension PriorityPromiseProtocol {
             return
         }
 
-        self.delay(interval) {  _ in
+        self.delay(interval) { _ in
             self.element.execute(with: self.input)
         }
     }

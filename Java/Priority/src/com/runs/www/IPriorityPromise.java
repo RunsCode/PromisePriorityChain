@@ -1,4 +1,4 @@
-package com.example.promiseprioritychain;
+package com.runs.www;
 
 @FunctionalInterface
 interface IPriorityPromiseCallback<T, E> {
@@ -47,12 +47,12 @@ public interface IPriorityPromise<T, E> {
     // the action performed by the current thread is switched to another thread,
     // and this API is not recommended if it is a UI operation
     default void loopValidated(boolean isValid, long interval) {
-        if (isValid || 0 == interval) {
+        if (isValid) {
             getPriorityElement().executeNextWithData(getOutput());
             return;
         }
 
-        if (0 >= interval) {
+        if (0 > interval) {
             Error error = new Error("interval must bigger than 0");
             getPriorityElement().breakWithError(error);
             return;
