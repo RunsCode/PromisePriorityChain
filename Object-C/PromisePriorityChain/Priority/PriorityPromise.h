@@ -44,7 +44,7 @@ typedef void(^PriorityPromiseConditionDelay)(BOOL condition, NSTimeInterval inte
 /// loopValidated(BOOL isValid, NSTimeInterval interval)
 ///
 /// @parameter isValid Judge conditions for polling
-/// if isValid is false，start loop seld,
+/// if isValid is false，start loop self,
 /// if isValid is true, end loop and execute next element
 ///
 /// @parameter interval if interval < 0, will call brake error and call catch block
