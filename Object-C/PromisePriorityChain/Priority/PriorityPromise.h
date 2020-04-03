@@ -1,5 +1,5 @@
 //
-//  PriorityPromise.h
+//  JYPriorityPromise.h
 //  PromisePriorityChain
 //
 //  Created by RunsCode on 2019/12/31.
@@ -25,24 +25,49 @@ typedef void(^PriorityPromiseConditionDelay)(BOOL condition, NSTimeInterval inte
 
 @property (nonatomic, strong) id<PriorityElementProtocol> element;
 
-/// 外部入参
+/// Pipeline data delivery
 @property (nonatomic, strong) Input input;
 @property (nonatomic, strong) Output output;
-/// 执行下一个
+
+/// execute  next element
 @property (nonatomic, strong, readonly) PriorityPromiseNext next;
-/// 校验执行 校验通过执行下一个 否则打断当前流程
+
+/// Check execution Check by executing the next or interrupting the current process
+/// validated(BOOL isValid)
+///
+/// @parameter isValid Judge conditions for next
+/// Similar to if(isValid) next()
+/// isValid == false -> will call brake error and call catch block
 @property (nonatomic, strong, readonly) PriorityPromiseValidated validated;
-/// 循环校验 直至到校验通过执行下一个 interval 校验的时间间隔 默认0
+
+/// Cycle check until the check pass (isValid is true) to perform the next interval check interval default 0
+/// loopValidated(BOOL isValid, NSTimeInterval interval)
+///
+/// @parameter isValid Judge conditions for polling
+/// if isValid is false，start loop seld,
+/// if isValid is true, end loop and execute next element
+///
+/// @parameter interval if interval < 0, will call brake error and call catch block
+
 @property (nonatomic, strong, readonly) PriorityPromiseLoopValidated loopValidated;
-/// condition == true 延迟interval执行
+
+/// Check whether the condition needs to delay the next step
+///
+/// @parameter condition
+/// @parameter interval time interval
+///
+/// (condition == true && interval > 0) -> delay interval execute next element
+/// (condition == false || interval <= 0) -> execute next element
+///
 @property (nonatomic, strong, readonly) PriorityPromiseConditionDelay conditionDelay;
 
-/// 打断当前流程 释放该链表之后的所有对象
+/// Break the current process, release all objects after the list
 @property (nonatomic, strong, readonly) PriorityPromiseBreak brake;
 
 + (instancetype)promiseWithInput:(Input)data element:(id<PriorityElementProtocol>)ele;
 + (instancetype)promiseWithInput:(Input)data element:(id<PriorityElementProtocol>)ele identifier:(NSString *)identidier;
 - (void)breakLoop;
+
 @end
 
 NS_ASSUME_NONNULL_END
