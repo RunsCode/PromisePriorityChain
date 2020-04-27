@@ -10,7 +10,9 @@
         .then(heart())
         .then(liver())
         .then(over())
-    head.execute(with: "head->")
+    //head.execute(with: "head->")
+    // nil also default value()
+    head.execute()
 ```
 
 #### General asynchronous operations 
