@@ -20,7 +20,8 @@ class PromisePriorityTest {
             .then(heart())
             .then(liver())
             .then(over())
-        head.execute(with: "head->")
+//        head.execute(with: "head->")
+        head.execute()
     }
 
     func delay(_ interval: TimeInterval, _ block: @escaping () -> Void) {

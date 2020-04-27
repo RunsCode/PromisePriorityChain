@@ -27,6 +27,10 @@ extension PriorityElementProtocol {
         next = ele
         return ele
     }
+
+    public func execute(_ data: Any? = nil) {
+        self.execute(with: data)
+    }
 }
 
 
