@@ -47,6 +47,10 @@
     return self;
 }
 
+- (void)execute {
+    [self executeWithData:nil];
+}
+
 - (void)executeWithData:(id)data {
     if (!_promise) {
         _promise = [PriorityPromise promiseWithInput:data element:self identifier:_identifier];
