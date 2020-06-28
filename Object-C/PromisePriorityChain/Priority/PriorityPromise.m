@@ -121,7 +121,6 @@
             [self.element nextWithValue:self.input];
             return;
         }
-        [(NSObject *)(self.element) performSelector:@selector(onSubscribe:) withObject:self.output afterDelay:interval];
         [(NSObject *)(self.element) performSelector:@selector(nextWithValue:) withObject:self.output afterDelay:interval];
     };
 }
@@ -137,7 +136,6 @@
 
 - (void)breakLoop {
     [NSObject cancelPreviousPerformRequestsWithTarget:_element selector:@selector(executeWithData:) object:_input];
-    [NSObject cancelPreviousPerformRequestsWithTarget:_element selector:@selector(onSubscribe:) object:_input];
     [NSObject cancelPreviousPerformRequestsWithTarget:_element selector:@selector(nextWithValue:) object:_input];
 }
 
