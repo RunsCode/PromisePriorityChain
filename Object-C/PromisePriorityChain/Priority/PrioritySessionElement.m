@@ -47,24 +47,6 @@
     return self;
 }
 
-- (void)execute {
-    [self executeWithData:nil];
-}
-
-- (void)executeWithData:(id)data {
-    _input = data;
-    //
-    if (!_promise) {
-        _promise = [PriorityPromise promiseWithInput:data element:self identifier:_identifier];
-    } else {
-        _promise.input = data;
-    }
-    if (_executePromiseBlock) {
-        _executePromiseBlock(_promise);
-        return;
-    }
-}
-
 - (instancetype)subscribe:(void (^)(id _Nullable))subscribe {
     _subscribe = subscribe;
     return self;
@@ -92,16 +74,6 @@
     _promise = nil;
 }
 
-- (void)onCatch:(NSError * _Nullable)error {
-    !_catch ?: _catch(error);
-    !_dispose ?: _dispose();
-}
-
-- (void)onSubscribe:(id _Nullable)data {
-    !_subscribe ?: _subscribe(data);
-    !_dispose ?: _dispose();
-}
-
 #pragma mark -- Private
 
 - (void)tryNextWithValue:(id)value {
@@ -119,6 +91,34 @@
 }
 
 #pragma mark -- JYPriorityElementProtocol
+
+- (void)execute {
+    [self executeWithData:nil];
+}
+
+- (void)executeWithData:(id)data {
+    _input = data;
+    //
+    if (!_promise) {
+        _promise = [PriorityPromise promiseWithInput:data element:self identifier:_identifier];
+    } else {
+        _promise.input = data;
+    }
+    if (_executePromiseBlock) {
+        _executePromiseBlock(_promise);
+        return;
+    }
+}
+
+- (void)onCatch:(NSError * _Nullable)error {
+    !_catch ?: _catch(error);
+    !_dispose ?: _dispose();
+}
+
+- (void)onSubscribe:(id _Nullable)data {
+    !_subscribe ?: _subscribe(data);
+    !_dispose ?: _dispose();
+}
 
 - (void)nextWithValue:(id _Nullable)value {
     _promise = nil;
