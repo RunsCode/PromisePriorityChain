@@ -21,7 +21,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @required
 - (void)nextWithValue:(id _Nullable)value;
-- (void)breakWithError:(NSError *_Nullable)error;
+- (void)breakProcess;
+
+- (void)onSubscribe:(id _Nullable)data;
+- (void)onCatch:(NSError *_Nullable)error;
+
 /// override by subclass
 - (void)execute;
 - (void)executeWithData:(id _Nullable)data;

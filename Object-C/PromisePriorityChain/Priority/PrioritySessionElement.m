@@ -52,6 +52,8 @@
 }
 
 - (void)executeWithData:(id)data {
+    _input = data;
+    //
     if (!_promise) {
         _promise = [PriorityPromise promiseWithInput:data element:self identifier:_identifier];
     } else {
@@ -90,14 +92,17 @@
     _promise = nil;
 }
 
-#pragma mark -- Private
+- (void)onCatch:(NSError * _Nullable)error {
+    !_catch ?: _catch(error);
+    !_dispose ?: _dispose();
+}
 
-- (void)handleCompletionWithValue:(id)data {
-    _promise = nil;
-    //
+- (void)onSubscribe:(id _Nullable)data {
     !_subscribe ?: _subscribe(data);
     !_dispose ?: _dispose();
 }
+
+#pragma mark -- Private
 
 - (void)tryNextWithValue:(id)value {
     if (!_next) return;
@@ -113,23 +118,18 @@
     }
 }
 
-- (void)handleBreakWithError:(NSError *)error {
-    _promise = nil;
-    //
-    !_catch ?: _catch(error);
-    !_dispose ?: _dispose();
-}
-
 #pragma mark -- JYPriorityElementProtocol
 
 - (void)nextWithValue:(id _Nullable)value {
-    [self handleCompletionWithValue:value];
+    _promise = nil;
+    //
     [self tryNextWithValue:value];
 }
 
-- (void)breakWithError:(NSError *_Nullable)error {
-    [self handleBreakWithError:error];
+- (void)breakProcess {
+    _promise = nil;
 }
+
 
 @end
 

@@ -69,6 +69,7 @@
     @weakify(self)
     return ^(id _Nullable data) {
         @strongify(self)
+        [self.element onSubscribe:data];
         [self.element nextWithValue:data];
     };
 }
@@ -78,11 +79,13 @@
     return ^(BOOL bValue) {
         @strongify(self)
         if (bValue) {
+            [self.element onSubscribe:self.output];
             [self.element nextWithValue:self.output];
             return;
         }
         NSError *err = [NSError errorWithDomain:@"validated failure" code:PriorityValidatedError userInfo:nil];
-        [self.element breakWithError:err];
+        [self.element onCatch:err];
+        [self.element breakProcess];
     };
 }
 
@@ -91,13 +94,15 @@
     return ^(BOOL bValue, NSTimeInterval interval) {
         @strongify(self)
         if (bValue) {
+            [self.element onSubscribe:self.output];
             [self.element nextWithValue:self.output];
             NSLog(@"2.priority promise %@ loop validates succed", self.identifier);
             return;
         }
         if (interval < 0) {
             NSError *err = [NSError errorWithDomain:@"interval must bigger than 0" code:PriorityLoopValidatedError userInfo:nil];
-            [self.element breakWithError:err];
+            [self.element onCatch:err];
+            [self.element breakProcess];
             NSLog(@"1.priority promise %@ loop validates failure", self.identifier);
             return;
         }
@@ -112,9 +117,11 @@
     return ^(BOOL condition, NSTimeInterval interval) {
         @strongify(self)
         if (!condition || interval <= 0) {
+            [self.element onSubscribe:self.input];
             [self.element nextWithValue:self.input];
             return;
         }
+        [(NSObject *)(self.element) performSelector:@selector(onSubscribe:) withObject:self.output afterDelay:interval];
         [(NSObject *)(self.element) performSelector:@selector(nextWithValue:) withObject:self.output afterDelay:interval];
     };
 }
@@ -123,12 +130,14 @@
     @weakify(self)
     return ^(NSError *_Nullable err) {
         @strongify(self)
-        [self.element breakWithError:err];
+        [self.element onCatch:err];
+        [self.element breakProcess];
     };
 }
 
 - (void)breakLoop {
     [NSObject cancelPreviousPerformRequestsWithTarget:_element selector:@selector(executeWithData:) object:_input];
+    [NSObject cancelPreviousPerformRequestsWithTarget:_element selector:@selector(onSubscribe:) object:_input];
     [NSObject cancelPreviousPerformRequestsWithTarget:_element selector:@selector(nextWithValue:) object:_input];
 }
 

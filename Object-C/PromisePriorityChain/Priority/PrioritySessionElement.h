@@ -12,34 +12,31 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/// 正确的使用方式
+/// The correct way to use
 #define PromisePriority(T,V) PrioritySessionElement<T, V> elementWithPromiseBlock:^(PriorityPromise<T, V> *promise)
 
-/// Input： 入参类型  Output：给下个元素的数据类型
+/// Input: Input parameter type Output: Data type for the next element
 @interface PrioritySessionElement<Input, Output> : NSObject<PriorityElementProtocol>
 
-/// 以下几种初始化方式已被废弃 保留只为做兼容处理
-typedef void(^OnNext)(Output _Nullable value);
-typedef void(^OnBreak)(NSError *_Nullable err);
-//
 typedef void(^ExecutePromiseBlock)(PriorityPromise<Input, Output> *promise);
 typedef PrioritySessionElement *_Nonnull(^Then)(PrioritySessionElement *session);
 
+@property (nonatomic, weak) Input input;
 
-/// Element 标识
+/// Element id
 @property (nonatomic, copy) NSString *identifier;
-/// 连接下一个Element
+/// link to the next Element
 @property (nonatomic, strong, readonly) Then then;
 
 
 + (instancetype)elementWithPromiseBlock:(ExecutePromiseBlock)block;
 + (instancetype)elementWithPromiseBlock:(ExecutePromiseBlock)block identifier:(NSString *_Nullable)identifier;
 
-/// 订阅的是正常流程成功处理结果回调
+/// Subscribe to the normal process and successfully process the result callback
 - (instancetype)subscribe:(void (^)(Output _Nullable value))subscribe;
-/// 流程打断回调
+/// Process interrupt callback
 - (instancetype)catch:(void (^)(NSError *_Nullable error))catch;
-/// 该过程处理结束回调 无论成功与否
+/// The process ends with a callback regardless of success
 - (instancetype)dispose:(dispatch_block_t)dispose;
 
 - (void)breakPromiseLoop;
