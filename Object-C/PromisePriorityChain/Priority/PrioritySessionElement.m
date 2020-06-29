@@ -90,6 +90,7 @@
     while (next) {
         __auto_type obj = next;
         next = obj.next;
+        obj.retainRef = nil;
         obj = nil;
     }
 }
@@ -148,6 +149,7 @@
     _promise = nil;
     //
     [self releaseReference];
+    [self releaseChain];
 }
 
 
