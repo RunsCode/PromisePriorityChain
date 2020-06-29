@@ -69,7 +69,7 @@
     @weakify(self)
     return ^(id _Nullable data) {
         @strongify(self)
-        [self.element onSubscribe:data];
+        [self.element onSubscribe:!self.output ? data : self.output];
         [self.element nextWithValue:data];
     };
 }

@@ -115,6 +115,7 @@
     return [[[PromisePriority(NSNumber *, NSString *) {
         [self dealy:0.2 completed:^{
             NSLog(@"normalAsyncElement promise data = %@", promise.input.stringValue);
+            promise.output = @"output";
             promise.next(@"session1");
 //            promise.brake(nil);
         }];
