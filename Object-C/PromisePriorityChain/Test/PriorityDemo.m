@@ -29,9 +29,22 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        [self testExample];
+        [self testCustom];
     }
     return self;
+}
+
+- (void)testCustom {
+    PrioritySessionElement *normalAsyncElement = [self normalAsyncElement];
+    PrioritySessionElement<NSNumber *, NSString *> *headElement = [self customSession];
+    PrioritySessionElement *testElement = [[PromisePriority(NSString *, id) {
+        NSLog(@"testElement promise data = %@", promise.input);
+        promise.next(@"11000");
+    } identifier:@"testElement"] dispose:^{
+        NSLog(@"❤️testElement dispose❤️");
+    }];
+    normalAsyncElement.then(headElement).then(testElement);
+    [normalAsyncElement executeWithData:@(-2)];
 }
 
 
@@ -113,7 +126,7 @@
 
 - (PrioritySessionElement *)normalAsyncElement {
     return [[[PromisePriority(NSNumber *, NSString *) {
-        [self dealy:0.2 completed:^{
+        [self dealy:3 completed:^{
             NSLog(@"normalAsyncElement promise data = %@", promise.input.stringValue);
             promise.output = @"output";
             promise.next(@"session1");

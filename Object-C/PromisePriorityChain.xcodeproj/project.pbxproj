@@ -142,10 +142,10 @@
 		4F103CDB2425F7DB00429074 /* Test */ = {
 			isa = PBXGroup;
 			children = (
+				4F103CDD2425F7DB00429074 /* PriorityDemo.h */,
+				4F103CDC2425F7DB00429074 /* PriorityDemo.m */,
 				4F103CE52425F7EC00429074 /* PrioritySessionCustomElement.h */,
 				4F103CE42425F7EC00429074 /* PrioritySessionCustomElement.m */,
-				4F103CDC2425F7DB00429074 /* PriorityDemo.m */,
-				4F103CDD2425F7DB00429074 /* PriorityDemo.h */,
 			);
 			path = Test;
 			sourceTree = "<group>";

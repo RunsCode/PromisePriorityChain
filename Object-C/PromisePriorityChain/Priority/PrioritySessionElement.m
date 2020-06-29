@@ -19,6 +19,8 @@
 
 @property (nonatomic, strong) PriorityPromise *promise;
 
+@property (nonatomic, strong) id retainRef;
+
 @end
 
 @implementation PrioritySessionElement
@@ -63,8 +65,10 @@
 }
 
 - (Then)then {
+    [self retainReference];
     return ^(PrioritySessionElement *ele) {
         self.next = ele;
+        [ele retainReference];
         return ele;
     };
 }
@@ -90,6 +94,14 @@
     }
 }
 
+- (void)retainReference {
+    _retainRef = self;
+}
+
+- (void)releaseReference {
+    _retainRef = nil;
+}
+
 #pragma mark -- JYPriorityElementProtocol
 
 - (void)execute {
@@ -113,21 +125,29 @@
 - (void)onCatch:(NSError * _Nullable)error {
     !_catch ?: _catch(error);
     !_dispose ?: _dispose();
+    //
+    [self releaseReference];
 }
 
 - (void)onSubscribe:(id _Nullable)data {
     !_subscribe ?: _subscribe(data);
     !_dispose ?: _dispose();
+    //
+    [self releaseReference];
 }
 
 - (void)nextWithValue:(id _Nullable)value {
     _promise = nil;
     //
     [self tryNextWithValue:value];
+    //
+    [self releaseReference];
 }
 
 - (void)breakProcess {
     _promise = nil;
+    //
+    [self releaseReference];
 }
 
 
