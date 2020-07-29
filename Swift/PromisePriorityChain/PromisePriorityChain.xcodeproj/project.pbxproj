@@ -22,6 +22,7 @@
 		4F103D1F2426482000429074 /* PriorityError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F103D1D2426482000429074 /* PriorityError.swift */; };
 		4F103D2224279C9500429074 /* PromisePriorityTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F103D2124279C9500429074 /* PromisePriorityTest.swift */; };
 		4F103D2324279C9500429074 /* PromisePriorityTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F103D2124279C9500429074 /* PromisePriorityTest.swift */; };
+		4F54B16024D00C410007A743 /* PriorityCustomElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F54B15F24D00C410007A743 /* PriorityCustomElement.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,6 +34,19 @@
 			remoteInfo = PromisePriorityChain;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		4FBCF77524D1201200AB2721 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		4F103CF124263DB300429074 /* PromisePriorityChain.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PromisePriorityChain.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -50,6 +64,9 @@
 		4F103D1A2426418800429074 /* PriorityPromise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityPromise.swift; sourceTree = "<group>"; };
 		4F103D1D2426482000429074 /* PriorityError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityError.swift; sourceTree = "<group>"; };
 		4F103D2124279C9500429074 /* PromisePriorityTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromisePriorityTest.swift; sourceTree = "<group>"; };
+		4F54B15F24D00C410007A743 /* PriorityCustomElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityCustomElement.swift; sourceTree = "<group>"; };
+		4FBCF76E24D1201200AB2721 /* TestModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestModule.h; sourceTree = "<group>"; };
+		4FBCF76F24D1201200AB2721 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +92,7 @@
 			children = (
 				4F103CF324263DB300429074 /* PromisePriorityChain */,
 				4F103D0A24263DB400429074 /* PromisePriorityChainTests */,
+				4FBCF76D24D1201200AB2721 /* TestModule */,
 				4F103CF224263DB300429074 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -135,8 +153,18 @@
 			isa = PBXGroup;
 			children = (
 				4F103D2124279C9500429074 /* PromisePriorityTest.swift */,
+				4F54B15F24D00C410007A743 /* PriorityCustomElement.swift */,
 			);
 			path = Test;
+			sourceTree = "<group>";
+		};
+		4FBCF76D24D1201200AB2721 /* TestModule */ = {
+			isa = PBXGroup;
+			children = (
+				4FBCF76E24D1201200AB2721 /* TestModule.h */,
+				4FBCF76F24D1201200AB2721 /* Info.plist */,
+			);
+			path = TestModule;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -149,6 +177,7 @@
 				4F103CED24263DB300429074 /* Sources */,
 				4F103CEE24263DB300429074 /* Frameworks */,
 				4F103CEF24263DB300429074 /* Resources */,
+				4FBCF77524D1201200AB2721 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -245,6 +274,7 @@
 				4F103CF524263DB300429074 /* AppDelegate.swift in Sources */,
 				4F103D2224279C9500429074 /* PromisePriorityTest.swift in Sources */,
 				4F103CF724263DB300429074 /* SceneDelegate.swift in Sources */,
+				4F54B16024D00C410007A743 /* PriorityCustomElement.swift in Sources */,
 				4F103D1824263FB900429074 /* PriorityElement.swift in Sources */,
 				4F103CF924263DB300429074 /* ContentView.swift in Sources */,
 			);

@@ -14,12 +14,12 @@ var dateFormatter: DateFormatter = {
     return fromatter
 }()
 
-func Println(_ string: String?) {
+public func Println(_ string: String?) {
     let time = dateFormatter.string(from: Date())
     print("\(time)  \(string ?? "")")
 }
 
-struct PriorityError : Error {
+public struct PriorityError : Error {
 
     enum PriorityErrorEnum : Int {
         case validated = 100000

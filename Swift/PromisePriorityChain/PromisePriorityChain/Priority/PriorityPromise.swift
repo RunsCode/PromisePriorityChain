@@ -29,7 +29,7 @@ extension PriorityPromiseProtocol {
         RunLoop.current.add(timer!, forMode: .common)
     }
 
-    func invalidate() {
+    public func invalidate() {
         timer?.invalidate()
         timer = nil
     }
@@ -37,54 +37,55 @@ extension PriorityPromiseProtocol {
 
 extension PriorityPromiseProtocol {
 
-    public func `break`(_ err: Error?) {
-        self.element.break(with: err)
+    public func `break`(_ err: PriorityError?) {
+        element.onCatch(err)
     }
 
-    public func next(_ o: Output) {
-        self.element.execute(next: o)
+    public func next(_ o: Output?) {
+        element.onSubscribe(o)
+        element.execute(next: o)
     }
 
     public func validated(_ isValid: Bool) {
         if isValid {
-            self.element.execute(next: self.output)
+            next(output)
             return
         }
 
         let err = PriorityError(kind: .validated, desc: "validated failure")
-        self.element.break(with: err)
+        element.onCatch(err)
     }
 
     public func loop(validated isValid: Bool, t interval: TimeInterval) {
         if isValid {
-            self.element.execute(next: self.output)
+            next(output)
             return
         }
 
         if 0 > interval {
             let err = PriorityError(kind: .loopValidated, desc: "loop validated failure")
-            self.element.break(with: err)
+            element.onCatch(err)
             return
         }
 
         self.delay(interval) { _ in
-            self.element.execute(with: self.input)
+            self.next(self.output)
         }
     }
 
     public func condition(_ isOk: Bool, delay interval: TimeInterval) {
         guard isOk else {
-            self.element.execute(next: self.output)
+            next(output)
             return
         }
 
-        self.delay(interval) {  _ in
-            self.element.execute(next: self.output)
+        self.delay(interval) { _ in
+            self.next(self.output)
         }
     }
 }
 
-class PriorityPromise<Input, Output> : PriorityPromiseProtocol {
+open class PriorityPromise<Input, Output> : PriorityPromiseProtocol {
 
     var id: String?
 
@@ -106,6 +107,13 @@ class PriorityPromise<Input, Output> : PriorityPromiseProtocol {
         self.id = id ?? ele.id
         self.input = input as? Input
         self.element = ele
+#if DEBUG
+        Println("create promise id: \(String(describing: id))")
+#endif
     }
 
+    open func identifier(_ identifier: String) -> Self {
+        id = identifier
+        return self
+    }
 }

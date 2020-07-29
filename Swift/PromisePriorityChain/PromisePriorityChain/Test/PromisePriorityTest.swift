@@ -14,8 +14,13 @@ class PromisePriorityTest {
 
     init() {
 
+
+    }
+
+    func test() {
         let head: PriorityElement<String, Int> = self.head()
         head.then(neck())
+            .then(custom())
             .then(lung())
             .then(heart())
             .then(liver())
@@ -28,6 +33,10 @@ class PromisePriorityTest {
         DispatchQueue.main.asyncAfter(deadline: .now() + interval) {
             block()
         }
+    }
+
+    private func custom() -> PriorityElement<Int, String> {
+        return PriorityCustomElement().identifier("custom")
     }
 
     private func head() -> PriorityElement<String, Int> {
@@ -46,10 +55,7 @@ class PromisePriorityTest {
 
             Println("head catch : \(String(describing: err))")
 
-        }.dispose {
-
-            Println("head dispose")
-        }
+        }.dispose { Println("head dispose") }.identifier("head")
     }
 
     private func neck() -> PriorityElement<Int, String> {
@@ -67,10 +73,7 @@ class PromisePriorityTest {
 
             Println("neck catch : \(String(describing: err))")
 
-        }.dispose {
-
-            Println("neck dispose")
-        }
+        }.dispose { Println("neck dispose") }.identifier("neck")
     }
 
     private func lung() -> PriorityElement<String, String> {
@@ -90,10 +93,7 @@ class PromisePriorityTest {
 
             Println("lung catch : \(String(describing: err))")
 
-        }.dispose {
-
-            Println("lung dispose")
-        }
+        }.dispose { Println("lung dispose") }.identifier("lung")
     }
 
     private func heart() -> PriorityElement<String, String> {
@@ -112,10 +112,7 @@ class PromisePriorityTest {
 
             Println("heart catch : \(String(describing: err))")
 
-        }.dispose {
-
-            Println("heart dispose")
-        }
+        }.dispose { Println("heart dispose") }.identifier("heart")
     }
 
 
@@ -136,10 +133,7 @@ class PromisePriorityTest {
 
             Println("liver catch : \(String(describing: err))")
 
-        }.dispose {
-
-            Println("liver dispose")
-        }
+        }.dispose { Println("liver dispose") }.identifier("liver")
     }
 
     private func over() -> PriorityElement<String, String> {
@@ -156,10 +150,7 @@ class PromisePriorityTest {
 
             Println("over catch : \(String(describing: err))")
 
-        }.dispose {
-
-            Println("over dispose")
-        }
+        }.dispose { Println("over dispose") }.identifier("over")
     }
 
 }

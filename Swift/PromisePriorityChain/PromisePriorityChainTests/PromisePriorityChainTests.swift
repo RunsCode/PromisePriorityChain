@@ -21,7 +21,25 @@ class PromisePriorityChainTests: XCTestCase {
 
     func testExample() {
         // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        func heart() -> PriorityElement<String, String> {
+            return PriorityElement {
+
+                Println("heart input : \($0.input ?? "-1")")
+                //
+                $0.output = "I am Heart"
+//                $0.condition(self.count > 5, delay: 2)
+
+            }.subscribe { i in
+
+                Println("heart subscribe : \(i ?? "-1")")
+
+            }.catch { err in
+
+                Println("heart catch : \(String(describing: err))")
+
+            }.dispose { Println("heart dispose") }.identifier("heart")
+        }
+
     }
 
     func testPerformanceExample() {
