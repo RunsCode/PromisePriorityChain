@@ -19,8 +19,6 @@
 
 @property (nonatomic, strong) PriorityPromise *promise;
 
-@property (nonatomic, strong) id retainRef;
-
 @end
 
 @implementation PrioritySessionElement
@@ -65,10 +63,8 @@
 }
 
 - (Then)then {
-    [self retainReference];
     return ^(PrioritySessionElement *ele) {
         self.next = ele;
-        [ele retainReference];
         return ele;
     };
 }
@@ -78,30 +74,6 @@
     _promise = nil;
 }
 
-#pragma mark -- Private
-
-- (void)tryNextWithValue:(id)value {
-    if (!_next) return;
-    [self.next executeWithData:value];
-}
-
-- (void)releaseChain {
-    __auto_type next = self.next;
-    while (next) {
-        __auto_type obj = next;
-        next = obj.next;
-        obj.retainRef = nil;
-        obj = nil;
-    }
-}
-
-- (void)retainReference {
-    _retainRef = self;
-}
-
-- (void)releaseReference {
-    _retainRef = nil;
-}
 
 #pragma mark -- JYPriorityElementProtocol
 
@@ -117,41 +89,53 @@
     } else {
         _promise.input = data;
     }
-    if (_executePromiseBlock) {
-        _executePromiseBlock(_promise);
-        return;
-    }
+    [self executePromise:_promise];
 }
 
-- (void)onCatch:(NSError * _Nullable)error {
-    !_catch ?: _catch(error);
-    !_dispose ?: _dispose();
-    //
-    [self releaseReference];
+- (void)executePromise:(PriorityPromise *)promise {
+    !_executePromiseBlock ?: _executePromiseBlock(promise);
 }
 
 - (void)onSubscribe:(id _Nullable)data {
+    [self breakPromiseLoop];
+    //
     !_subscribe ?: _subscribe(data);
     !_dispose ?: _dispose();
+}
+
+- (void)onCatch:(NSError * _Nullable)error {
+    [self breakPromiseLoop];
     //
-    [self releaseReference];
+    !_catch ?: _catch(error);
+    !_dispose ?: _dispose();
 }
 
 - (void)nextWithValue:(id _Nullable)value {
     _promise = nil;
     //
     [self tryNextWithValue:value];
-    //
-    [self releaseReference];
+}
+
+#pragma mark -- Private
+
+- (void)tryNextWithValue:(id)value {
+    if (!_next) return;
+    [self.next executeWithData:value];
+}
+
+- (void)releaseChain {
+    __auto_type next = self.next;
+    while (next) {
+        __auto_type obj = next;
+        next = obj.next;
+        obj = nil;
+    }
 }
 
 - (void)breakProcess {
     _promise = nil;
     //
-    [self releaseReference];
     [self releaseChain];
 }
-
-
 @end
 

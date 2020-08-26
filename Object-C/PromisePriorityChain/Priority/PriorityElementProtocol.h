@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+@class PriorityPromise<Input, Output>;
 
 typedef NS_ENUM(NSUInteger, JYPriorityErrorEnum) {
     PriorityValidatedError = 100000,
@@ -26,9 +27,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)onSubscribe:(id _Nullable)data;
 - (void)onCatch:(NSError *_Nullable)error;
 
-/// override by subclass
+///  can not override by subclass
 - (void)execute;
 - (void)executeWithData:(id _Nullable)data;
+
+/// override by subclass
+- (void)executePromise:(PriorityPromise *)promise;
 
 @end
 

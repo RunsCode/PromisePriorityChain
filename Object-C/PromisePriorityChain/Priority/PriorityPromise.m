@@ -65,6 +65,14 @@
     return p;
 }
 
+- (PriorityPromiseBreak)brake {
+    @weakify(self)
+    return ^(NSError *_Nullable err) {
+        @strongify(self)
+        [self.element onCatch:err];
+    };
+}
+
 - (PriorityPromiseNext)next {
     @weakify(self)
     return ^(id _Nullable data) {
@@ -85,7 +93,6 @@
         }
         NSError *err = [NSError errorWithDomain:@"validated failure" code:PriorityValidatedError userInfo:nil];
         [self.element onCatch:err];
-        [self.element breakProcess];
     };
 }
 
@@ -96,19 +103,24 @@
         if (bValue) {
             [self.element onSubscribe:self.output];
             [self.element nextWithValue:self.output];
+#ifdef DEBUG
             NSLog(@"2.priority promise %@ loop validates succed", self.identifier);
+#endif
             return;
         }
         if (interval < 0) {
             NSError *err = [NSError errorWithDomain:@"interval must bigger than 0" code:PriorityLoopValidatedError userInfo:nil];
             [self.element onCatch:err];
-            [self.element breakProcess];
+#ifdef DEBUG
             NSLog(@"1.priority promise %@ loop validates failure", self.identifier);
+#endif
             return;
         }
 
         [(NSObject *)(self.element) performSelector:@selector(executeWithData:) withObject:self.input afterDelay:interval];
+#ifdef DEBUG
         NSLog(@"0. priority promise %@ loop validates", self.identifier);
+#endif
     };
 }
 
@@ -122,15 +134,6 @@
             return;
         }
         [(NSObject *)(self.element) performSelector:@selector(nextWithValue:) withObject:self.output afterDelay:interval];
-    };
-}
-
-- (PriorityPromiseBreak)brake {
-    @weakify(self)
-    return ^(NSError *_Nullable err) {
-        @strongify(self)
-        [self.element onCatch:err];
-        [self.element breakProcess];
     };
 }
 

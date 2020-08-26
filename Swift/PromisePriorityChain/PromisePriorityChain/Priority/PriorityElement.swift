@@ -26,15 +26,6 @@ extension PublicPriorityChainProtocol {
     }
 }
 
-public protocol PublicPriorityElementProtocol : class {
-    associatedtype Input
-    associatedtype Output
-
-    /// Implementation of subclass for external module customization
-    /// - Parameter promise: promise
-    func execute(promise: PriorityPromise<Input, Output>)
-}
-
 protocol PublicPriorityPromiseProtocol :class {
     associatedtype Input
     associatedtype Output
@@ -81,6 +72,15 @@ extension PriorityElementProtocol {
         catchClosure?(err)
         disposeClosure?()
     }
+}
+
+public protocol PublicPriorityElementProtocol : class {
+    associatedtype Input
+    associatedtype Output
+
+    /// Implementation of subclass for external module customization
+    /// - Parameter promise: promise
+    func execute(promise: PriorityPromise<Input, Output>)
 }
 
 
