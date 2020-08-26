@@ -28,7 +28,9 @@ typedef PrioritySessionElement *_Nonnull(^Then)(PrioritySessionElement *session)
 /// link to the next Element
 @property (nonatomic, strong, readonly) Then then;
 
+@property (nonatomic, strong, readonly) PriorityPromise *promise;
 
+/// It is recommended to use macros$It is recommended to use macros `PromisePriority`
 + (instancetype)elementWithPromiseBlock:(ExecutePromiseBlock)block;
 + (instancetype)elementWithPromiseBlock:(ExecutePromiseBlock)block identifier:(NSString *_Nullable)identifier;
 
@@ -38,7 +40,7 @@ typedef PrioritySessionElement *_Nonnull(^Then)(PrioritySessionElement *session)
 - (instancetype)catch:(void (^)(NSError *_Nullable error))catch;
 /// The process ends with a callback regardless of success
 - (instancetype)dispose:(dispatch_block_t)dispose;
-
+/// Manual interrupt link list and release self-promise
 - (void)breakPromiseLoop;
 
 @end

@@ -31,7 +31,9 @@
 //}
 
 - (void)executePromise:(PriorityPromise *)promise {
-    promise.next(@(-100000896));
+//    promise.next(@(-100000896));
+//    promise.brake(nil);
+    [self onSubscribe:@(-100000896)];
 }
 
 - (NSString *)identifier {
