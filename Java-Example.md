@@ -35,7 +35,6 @@
 
             Integer t = promise.getInput();
             System.out.println("t = " + t.toString());
-            System.out.println("100ms查询一次，一共查询5次， 轮询 ");
             promise.next(100);
 
         }).subscribe(integer -> {
@@ -59,6 +58,7 @@
             mCount++;
             System.out.println(System.currentTimeMillis() + "  mCount = " + mCount);
             promise.setOutput(mCount);
+            System.out.println("100ms查询一次，一共查询5次， 轮询 ");
             promise.loopValidated(mCount >= 5, 100);
 
         }).subscribe(integer -> {
