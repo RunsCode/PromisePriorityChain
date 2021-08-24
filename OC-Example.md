@@ -16,7 +16,7 @@ headElement
 	.then(self.loopValidatedElement)
 	.then(self.conditionDelayElement)
 	.then(self.validatedElement);
-//
+///
 [headElement executeWithData:@(-2)];
 
 ```
