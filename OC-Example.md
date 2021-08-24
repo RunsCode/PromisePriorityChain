@@ -2,22 +2,22 @@
 
 ```objectivec
 
-	无需强引用 自引用内存管理 只要保证每一个element 链路完整向下传递或打断即可 promise.xxx()
+无需强引用 自引用内存管理 只要保证每一个element 链路完整向下传递或打断即可 promise.xxx()
 
-    PrioritySessionElement<NSNumber *, NSString *> *headElement = [self customSession];
-    PrioritySessionElement *normalAsyncElement = [self normalAsyncElement];
-    PrioritySessionElement *testElement = [[PromisePriority(NSString *, id) {
-        promise.next(@"11000");// promise.brake(error);
-    } identifier:@"testElement"] dispose:^{ ... }];
+PrioritySessionElement<NSNumber *, NSString *> *headElement = [self customSession];
+PrioritySessionElement *normalAsyncElement = [self normalAsyncElement];
+PrioritySessionElement *testElement = [[PromisePriority(NSString *, id) {
+	promise.next(@"11000");// promise.brake(error);
+} identifier:@"testElement"] dispose:^{ ... }];
 
-    headElement
-    .then(normalAsyncElement)
-    .then(testElement)
-    .then(self.loopValidatedElement)
-    .then(self.conditionDelayElement)
-    .then(self.validatedElement);
-    [headElement executeWithData:@(-2)];
-}
+headElement
+.then(normalAsyncElement)
+.then(testElement)
+.then(self.loopValidatedElement)
+.then(self.conditionDelayElement)
+.then(self.validatedElement);
+[headElement executeWithData:@(-2)];
+
 ```
 
 * 常规校验操作 Element （if else 嵌套）
