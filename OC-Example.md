@@ -11,11 +11,12 @@ PrioritySessionElement *testElement = [[PromisePriority(NSString *, id) {
 } identifier:@"testElement"] dispose:^{ ... }];
 
 headElement
-.then(normalAsyncElement)
-.then(testElement)
-.then(self.loopValidatedElement)
-.then(self.conditionDelayElement)
-.then(self.validatedElement);
+	.then(normalAsyncElement)
+	.then(testElement)
+	.then(self.loopValidatedElement)
+	.then(self.conditionDelayElement)
+	.then(self.validatedElement);
+//
 [headElement executeWithData:@(-2)];
 
 ```
